@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveBase.tankDrive(LeftDrive(), RightDrive());
+    driveBase.tankDrive(LeftThrottle(), RightThrottle());
     setShooterSpeed();
     winch();
     tunnel();
@@ -258,12 +258,12 @@ public class Robot extends TimedRobot {
     shooterSpeed = .75 + operatorStick.getRawAxis(2)*0.25;
   }
 
-  public double LeftDrive() {
+  public double LeftThrottle() {
     double throttleInput = -driverStick1.getRawAxis(1);
     return (Math.pow(throttleInput,5))/3  + (Math.pow(throttleInput,3))/3 +throttleInput/3;
   }
 
-  public double RightDrive() {
+  public double RightThrottle() {
     double throttleInput = driverStick2.getRawAxis(1);
     return (Math.pow(throttleInput,5))/3  + (Math.pow(throttleInput,3))/3 +throttleInput/3;
   }
