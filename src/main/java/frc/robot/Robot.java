@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
 
 
   /**
-   * 
+   *
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    
+
     leftLeader = new CANSparkMax(leftLeaderDeviceID, MotorType.kBrushless);
     leftFollower = new CANSparkMax(leftFollowerDeviceID, MotorType.kBrushless);
     rightLeader = new CANSparkMax(rightLeaderDeviceID, MotorType.kBrushless);
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
     shooterSpeed = 0.9;
 
-    
+
 
     if(leftLeader.setOpenLoopRampRate(.2) !=REVLibError.kOk) {
       SmartDashboard.putString("Ramp Rate", "Error");
@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveBase.tankDrive(-driverStick1.getRawAxis(1), driverStick2.getRawAxis(1));
+    driveBase.tankDrive(LeftDrive(), RightDrive());
     setShooterSpeed();
     winch();
     tunnel();
@@ -257,4 +257,15 @@ public class Robot extends TimedRobot {
   public void setShooterSpeed() {
     shooterSpeed = .75 + operatorStick.getRawAxis(2)*0.25;
   }
+
+  public double LeftDrive() {
+    double throttleInput = -driverStick1.getRawAxis(1);
+    return (Math.pow(throttleInput,5))/3  + (Math.pow(throttleInput,3))/3 +throttleInput/3;
+  }
+
+  public double RightDrive() {
+    double throttleInput = driverStick2.getRawAxis(1);
+    return (Math.pow(throttleInput,5))/3  + (Math.pow(throttleInput,3))/3 +throttleInput/3;
+  }
+
 }
