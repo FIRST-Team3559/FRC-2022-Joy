@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 
 
 
-    if(leftLeader.setOpenLoopRampRate(.2) !=REVLibError.kOk) {
+  /* if(leftLeader.setOpenLoopRampRate(.2) !=REVLibError.kOk) {
       SmartDashboard.putString("Ramp Rate", "Error");
     }
 
@@ -106,7 +106,7 @@ public class Robot extends TimedRobot {
     if(rightFollower.setOpenLoopRampRate(.2) !=REVLibError.kOk) {
       SmartDashboard.putString("Ramp Rate", "Error");
     }
-
+*/
   }
 
   /**
