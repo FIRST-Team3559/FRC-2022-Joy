@@ -25,7 +25,8 @@ import edu.wpi.first.cameraserver.CameraServer;
  */
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
+  private static final String kCustomAuto = "Shoot Only";
+  private static final String kNoAuto = "Do Nothing";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -61,7 +62,8 @@ public class Robot extends TimedRobot {
     CameraServer.startAutomaticCapture();
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
+    m_chooser.addOption("Shoot Only", kCustomAuto);
+    m_chooser.addOption("Do Nothing", kNoAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
     leftLeader = new CANSparkMax(leftLeaderDeviceID, MotorType.kBrushless);
@@ -148,14 +150,13 @@ public class Robot extends TimedRobot {
           highShooterMotor.set(shooterSpeed);
           lowShooterMotor.set(-shooterSpeed);
           tunnelMotor.set(-.25);
-        } else if (timer.get() < 6) {
+        } else {
           highShooterMotor.set(0);
           lowShooterMotor.set(0);
           tunnelMotor.set(0);
-          driveBase.tankDrive(0.5,-0.5);
-        } else {
-          driveBase.stopMotor();
         }
+        break;
+      case kNoAuto:
         break;
       case kDefaultAuto:
       default:
