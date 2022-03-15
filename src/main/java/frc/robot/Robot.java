@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
   private Spark winchMotor;
   private Spark tunnelMotor;
   private Spark feederMotor;
+  private Spark feederBarMotor;
   private CANSparkMax highShooterMotor;
   private CANSparkMax lowShooterMotor;
   private static final int highShooterMotorDeviceID = 20;
@@ -84,6 +85,7 @@ public class Robot extends TimedRobot {
     winchMotor = new Spark(0);
     tunnelMotor = new Spark(1);
     feederMotor = new Spark(2);
+    feederBarMotor = new Spark(3);
 
     driveBase = new DifferentialDrive(leftLeader, rightLeader);
 
@@ -241,9 +243,11 @@ public class Robot extends TimedRobot {
   public void feeder() {
     if (operatorStick.getRawButton(5)) {
       feederMotor.set(1);
+      feederBarMotor.set(1);
     }
     else if (operatorStick.getRawButton(4)) {
       feederMotor.set(-1);
+      feederBarMotor.set(-1);
     }
     else {
       feederMotor.set(0);
