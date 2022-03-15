@@ -29,7 +29,6 @@ public class Robot extends TimedRobot {
   private static final String kNoAuto = "Do Nothing";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
   private DifferentialDrive driveBase;
   private Joystick driverStick1;
   private Joystick driverStick2;
@@ -48,6 +47,9 @@ public class Robot extends TimedRobot {
   private static final int lowShooterMotorDeviceID = 21;
   private Timer timer;
   private double shooterSpeed;
+  private static final int climberMotorDeviceID = 22;
+  private CANSparkMax climberMotor;
+  private double climberSpeed;
 
 
 
@@ -77,6 +79,8 @@ public class Robot extends TimedRobot {
     highShooterMotor = new CANSparkMax(highShooterMotorDeviceID, MotorType.kBrushless);
     lowShooterMotor = new CANSparkMax(lowShooterMotorDeviceID, MotorType.kBrushless);
 
+    climberMotor = new CANSparkMax(climberMotorDeviceID, MotorType.kBrushless);
+
     winchMotor = new Spark(0);
     tunnelMotor = new Spark(1);
     feederMotor = new Spark(2);
@@ -90,6 +94,7 @@ public class Robot extends TimedRobot {
     timer = new Timer();
 
     shooterSpeed = 0.9;
+    climberSpeed = operatorStick.getRawAxis(1);
 
 
 
@@ -190,6 +195,7 @@ public class Robot extends TimedRobot {
     tunnel();
     feeder();
     shooter();
+    climber();
 
   }
 
@@ -208,6 +214,18 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
+
+  public void climber() {
+    if (operatorStick.getRawAxis(1) > .5) {
+      climberMotor.set(climberSpeed);
+    }
+    else if (operatorStick.getRawAxis(1) > -.5) {
+      climberMotor.set(climberSpeed);
+    }
+    else {
+      climberMotor.set(0);
+    }
+  }
 
   public void shooter() {
     if (operatorStick.getRawButton(1)) {
