@@ -263,9 +263,9 @@ public class Robot extends TimedRobot {
   }
 
   public void winch() {
-    if (operatorStick.getRawButton(6)) {
+    if (operatorStick.getRawButton(11)) {
       winchMotor.set(1);
-    } else if (operatorStick.getRawButton(7)) {
+    } else if (operatorStick.getRawButton(10)) {
       winchMotor.set(-1);
     }
     else {
