@@ -50,7 +50,6 @@ public class Robot extends TimedRobot {
   private double shooterSpeed;
   private static final int climberMotorDeviceID = 22;
   private CANSparkMax climberMotor;
-  private double climberSpeed;
 
 
 
@@ -96,7 +95,6 @@ public class Robot extends TimedRobot {
     timer = new Timer();
 
     shooterSpeed = 0.9;
-    climberSpeed = operatorStick.getRawAxis(1);
 
 
 
@@ -218,11 +216,11 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {}
 
   public void climber() {
-    if (operatorStick.getRawAxis(1) > .5) {
-      climberMotor.set(climberSpeed);
+    if (operatorStick.getRawButton(7)) {
+      climberMotor.set(1);
     }
-    else if (operatorStick.getRawAxis(1) > -.5) {
-      climberMotor.set(climberSpeed);
+    else if (operatorStick.getRawButton(6)) {
+      climberMotor.set(-1);
     }
     else {
       climberMotor.set(0);
